@@ -24,24 +24,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#1e1e1e]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center">
           <Image
             src="/images/logo.png"
             alt="Lux Automotive Logo"
-            width={36}
-            height={36}
-            className="object-contain w-9 h-9 flex-shrink-0"
+            width={200}
+            height={50}
+            className="object-contain h-auto w-[150px] md:w-[200px]"
             priority
           />
-          <div className="flex flex-col leading-none">
-            <span className="font-black text-sm tracking-[0.18em] uppercase text-white">
-              LUX
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#c0392b] ml-1 mb-0.5 align-middle" />
-            </span>
-            <span className="font-light text-[10px] tracking-[0.35em] uppercase text-gray-400 group-hover:text-gray-300 transition-colors">
-              Automotive
-            </span>
-          </div>
         </Link>
 
         {/* Desktop nav */}
