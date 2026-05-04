@@ -28,9 +28,9 @@ export default function Navbar() {
           <Image
             src="/images/logo.png"
             alt="Lux Automotive Logo"
-            width={200}
-            height={50}
-            className="object-contain h-auto w-[150px] md:w-[200px]"
+            width={120}
+            height={30}
+            className="object-contain h-auto w-[90px] md:w-[120px]"
             priority
           />
         </Link>
