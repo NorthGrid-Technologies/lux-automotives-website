@@ -26,10 +26,52 @@ const EMPTY: FormData = {
   color: '', plate: '', askingPrice: '', condition: '', notes: '',
 };
 
+// ── Defined at module level so the reference is stable across renders ─────────
+function Field({
+  label,
+  placeholder,
+  type = 'text',
+  value,
+  error,
+  onChange,
+}: {
+  label: string;
+  placeholder: string;
+  type?: string;
+  value: string;
+  error?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
+        {label} <span className="text-[#c0392b]">*</span>
+      </label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className="lux-input"
+      />
+      {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function SellPage() {
   const [form, setForm] = useState<FormData>(EMPTY);
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [submitted, setSubmitted] = useState(false);
+
+  function setField(key: keyof FormData) {
+    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      setForm((prev) => ({ ...prev, [key]: e.target.value }));
+      setErrors((prev) => ({ ...prev, [key]: undefined }));
+    };
+  }
 
   function validate(): boolean {
     const e: Partial<FormData> = {};
@@ -63,23 +105,6 @@ export default function SellPage() {
     });
     setSubmitted(true);
   }
-
-  function set(key: keyof FormData) {
-    return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-      setForm((f) => ({ ...f, [key]: e.target.value }));
-      setErrors((err) => ({ ...err, [key]: undefined }));
-    };
-  }
-
-  const Field = ({ k, label, placeholder, type = 'text' }: { k: keyof FormData; label: string; placeholder: string; type?: string }) => (
-    <div>
-      <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
-        {label} <span className="text-[#c0392b]">*</span>
-      </label>
-      <input type={type} placeholder={placeholder} value={form[k]} onChange={set(k)} className="lux-input" />
-      {errors[k] && <p className="text-red-400 text-xs mt-1">{errors[k]}</p>}
-    </div>
-  );
 
   return (
     <PageTransition>
@@ -142,8 +167,20 @@ export default function SellPage() {
                   Your Details
                 </legend>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field k="name" label="Character Name" placeholder="Marcus Holloway" />
-                  <Field k="phone" label="Phone / Contact" placeholder="555-0100" />
+                  <Field
+                    label="Character Name"
+                    placeholder="Marcus Holloway"
+                    value={form.name}
+                    error={errors.name}
+                    onChange={setField('name')}
+                  />
+                  <Field
+                    label="Phone / Contact"
+                    placeholder="555-0100"
+                    value={form.phone}
+                    error={errors.phone}
+                    onChange={setField('phone')}
+                  />
                 </div>
               </fieldset>
 
@@ -153,18 +190,56 @@ export default function SellPage() {
                   Vehicle Details
                 </legend>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field k="brand" label="Brand" placeholder="e.g. Pegassi" />
-                  <Field k="model" label="Model" placeholder="e.g. Zentorno" />
-                  <Field k="year" label="Year" placeholder="2024" type="number" />
-                  <Field k="color" label="Color" placeholder="Matte Black" />
-                  <Field k="plate" label="Plate Number" placeholder="e.g. ZEN-001" />
-                  <Field k="askingPrice" label="Asking Price ($)" placeholder="725000" type="number" />
+                  <Field
+                    label="Brand"
+                    placeholder="e.g. Pegassi"
+                    value={form.brand}
+                    error={errors.brand}
+                    onChange={setField('brand')}
+                  />
+                  <Field
+                    label="Model"
+                    placeholder="e.g. Zentorno"
+                    value={form.model}
+                    error={errors.model}
+                    onChange={setField('model')}
+                  />
+                  <Field
+                    label="Year"
+                    placeholder="2024"
+                    type="number"
+                    value={form.year}
+                    error={errors.year}
+                    onChange={setField('year')}
+                  />
+                  <Field
+                    label="Color"
+                    placeholder="Matte Black"
+                    value={form.color}
+                    error={errors.color}
+                    onChange={setField('color')}
+                  />
+                  <Field
+                    label="Plate Number"
+                    placeholder="e.g. ZEN-001"
+                    value={form.plate}
+                    error={errors.plate}
+                    onChange={setField('plate')}
+                  />
+                  <Field
+                    label="Asking Price ($)"
+                    placeholder="725000"
+                    type="number"
+                    value={form.askingPrice}
+                    error={errors.askingPrice}
+                    onChange={setField('askingPrice')}
+                  />
                 </div>
                 <div>
                   <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
                     Condition <span className="text-[#c0392b]">*</span>
                   </label>
-                  <select value={form.condition} onChange={set('condition')} className="lux-input">
+                  <select value={form.condition} onChange={setField('condition')} className="lux-input">
                     <option value="">Select condition...</option>
                     {CONDITIONS.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -181,7 +256,7 @@ export default function SellPage() {
                   rows={4}
                   placeholder="Any mods, damage, or special details about your vehicle..."
                   value={form.notes}
-                  onChange={set('notes')}
+                  onChange={setField('notes')}
                   className="lux-input resize-none"
                 />
               </fieldset>
