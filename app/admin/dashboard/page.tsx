@@ -773,7 +773,7 @@ export default function AdminDashboard() {
       {/* Sidebar */}
       <aside className={`${sidebarOpen ? 'w-56' : 'w-16'} flex-shrink-0 border-r border-[#1a1a1a] bg-[#0d0d0d] flex flex-col transition-all duration-200`}>
         {/* Logo */}
-        <div className="h-14 flex items-center px-4 border-b border-[#1a1a1a] gap-2">
+        <div className="min-h-[100px] flex items-center px-4 border-b border-[#1a1a1a] gap-2">
           {sidebarOpen && (
             <div className="flex flex-col gap-0.5 min-w-0">
               <Image
