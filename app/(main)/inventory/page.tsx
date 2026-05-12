@@ -9,7 +9,7 @@ import VehicleCard from '@/components/VehicleCard';
 import PageTransition from '@/components/PageTransition';
 import { Search } from 'lucide-react';
 
-const ALL_CLASSES: VehicleClass[] = ['Super', 'Sports', 'Muscle', 'SUV', 'Motorcycle'];
+const ALL_CLASSES: VehicleClass[] = ['Super', 'Sports', 'Muscle', 'SUV'];
 const ALL_STATUSES: VehicleStatus[] = ['available', 'reserved', 'sold'];
 
 type SortKey = 'price-asc' | 'price-desc' | 'mileage-asc' | 'name-asc';

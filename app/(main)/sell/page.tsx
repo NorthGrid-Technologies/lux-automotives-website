@@ -13,17 +13,18 @@ interface FormData {
   phone: string;
   brand: string;
   model: string;
-  year: string;
   color: string;
   plate: string;
   askingPrice: string;
   condition: string;
+  vehiclePictureUrl: string;
   notes: string;
 }
 
 const EMPTY: FormData = {
-  name: '', phone: '', brand: '', model: '', year: '',
-  color: '', plate: '', askingPrice: '', condition: '', notes: '',
+  name: '', phone: '', brand: '', model: '',
+  color: '', plate: '', askingPrice: '', condition: '',
+  vehiclePictureUrl: '', notes: '',
 };
 
 // ── Defined at module level so the reference is stable across renders ─────────
@@ -79,11 +80,11 @@ export default function SellPage() {
     if (!form.phone.trim()) e.phone = 'Required';
     if (!form.brand.trim()) e.brand = 'Required';
     if (!form.model.trim()) e.model = 'Required';
-    if (!form.year || isNaN(Number(form.year)) || Number(form.year) < 1990) e.year = 'Enter a valid year (1990+)';
     if (!form.color.trim()) e.color = 'Required';
     if (!form.plate.trim()) e.plate = 'Required';
     if (!form.askingPrice || isNaN(Number(form.askingPrice)) || Number(form.askingPrice) <= 0) e.askingPrice = 'Enter a valid price';
     if (!form.condition) e.condition = 'Select a condition';
+    if (!form.vehiclePictureUrl.trim()) e.vehiclePictureUrl = 'Required';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -96,11 +97,11 @@ export default function SellPage() {
       phone: form.phone.trim(),
       brand: form.brand.trim(),
       model: form.model.trim(),
-      year: Number(form.year),
       color: form.color.trim(),
       plate: form.plate.trim(),
       askingPrice: Number(form.askingPrice),
       condition: form.condition,
+      vehiclePictureUrl: form.vehiclePictureUrl.trim(),
       notes: form.notes.trim(),
     });
     setSubmitted(true);
@@ -205,14 +206,6 @@ export default function SellPage() {
                     onChange={setField('model')}
                   />
                   <Field
-                    label="Year"
-                    placeholder="2024"
-                    type="number"
-                    value={form.year}
-                    error={errors.year}
-                    onChange={setField('year')}
-                  />
-                  <Field
                     label="Color"
                     placeholder="Matte Black"
                     value={form.color}
@@ -234,17 +227,26 @@ export default function SellPage() {
                     error={errors.askingPrice}
                     onChange={setField('askingPrice')}
                   />
+                  <div>
+                    <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
+                      Condition <span className="text-[#c0392b]">*</span>
+                    </label>
+                    <select value={form.condition} onChange={setField('condition')} className="lux-input">
+                      <option value="">Select condition...</option>
+                      {CONDITIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    {errors.condition && <p className="text-red-400 text-xs mt-1">{errors.condition}</p>}
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
-                    Condition <span className="text-[#c0392b]">*</span>
-                  </label>
-                  <select value={form.condition} onChange={setField('condition')} className="lux-input">
-                    <option value="">Select condition...</option>
-                    {CONDITIONS.map((c) => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                  {errors.condition && <p className="text-red-400 text-xs mt-1">{errors.condition}</p>}
-                </div>
+
+                {/* Vehicle Picture URL — full width */}
+                <Field
+                  label="Vehicle Picture URL"
+                  placeholder="Paste a direct image link to your vehicle"
+                  value={form.vehiclePictureUrl}
+                  error={errors.vehiclePictureUrl}
+                  onChange={setField('vehiclePictureUrl')}
+                />
               </fieldset>
 
               {/* Notes */}

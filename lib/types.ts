@@ -43,11 +43,11 @@ export interface SellRequest {
   phone: string;
   brand: string;
   model: string;
-  year: number;
   color: string;
   plate: string;
   askingPrice: number;
   condition: string;
+  vehiclePictureUrl: string;
   notes: string;
   date: string;
   status: 'pending' | 'reviewed' | 'rejected';

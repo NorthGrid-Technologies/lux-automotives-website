@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function Footer() {
   return (
     <footer className="border-t border-[#1a1a1a] bg-[#0a0a0a] py-12 px-6 mt-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand */}
         <div>
           <Image
@@ -43,11 +43,30 @@ export default function Footer() {
         <div>
           <p className="text-xs uppercase tracking-widest text-gray-600 mb-4">Location</p>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Premium Deluxe Motorsport<br />
             Rockford Hills, Los Santos<br />
             San Andreas
           </p>
           <p className="text-xs text-gray-700 mt-4">GTA World RP — In Character Business</p>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <p className="text-xs uppercase tracking-widest text-gray-600 mb-4">Contact</p>
+          <ul className="space-y-3 text-sm text-gray-500">
+            <li>
+              <a
+                href="https://gtaw.link/lux"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#c0392b] transition-colors"
+              >
+                Join our Discord
+              </a>
+            </li>
+            <li className="text-gray-600">
+              Hotline: Coming Soon
+            </li>
+          </ul>
         </div>
       </div>
 

@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { getVehicleById, recordSale } from '@/lib/storage';
+import { motion } from 'framer-motion';
+import { getVehicleById } from '@/lib/storage';
 import { Vehicle } from '@/lib/types';
 import ClassBadge from '@/components/ClassBadge';
 import StatusBadge from '@/components/StatusBadge';
@@ -13,7 +13,7 @@ import PageTransition from '@/components/PageTransition';
 import {
   Zap, Shield, Droplets, Settings2, Wrench, Gauge,
   Star, BadgeDollarSign, Music2, Package, Hash,
-  ChevronLeft, CheckCircle
+  ChevronLeft, ExternalLink, CheckCircle
 } from 'lucide-react';
 
 function fmt(n: number) {
@@ -53,10 +53,6 @@ export default function VehicleDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
-  const [buyerName, setBuyerName] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [purchased, setPurchased] = useState(false);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const found = getVehicleById(id);
@@ -64,26 +60,13 @@ export default function VehicleDetailPage() {
     else setVehicle(found);
   }, [id, router]);
 
-  function handleBuy() {
-    if (!buyerName.trim()) { setError('Please enter your character name.'); return; }
-    if (!vehicle) return;
-    try {
-      recordSale(vehicle.id, buyerName.trim());
-      setPurchased(true);
-      setShowModal(false);
-      setVehicle(getVehicleById(vehicle.id) ?? vehicle);
-    } catch {
-      setError('Purchase failed. Please try again.');
-    }
-  }
-
   if (!vehicle) return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-8 h-8 border-2 border-[#c0392b] border-t-transparent rounded-full animate-spin" />
     </div>
   );
 
-  const canBuy = vehicle.status === 'available';
+  const canEnquire = vehicle.status === 'available';
 
   const specs: SpecItem[] = [
     { label: 'Plate', value: vehicle.plate, icon: <Hash size={12} /> },
@@ -166,29 +149,20 @@ export default function VehicleDetailPage() {
               <p className="text-gray-600 text-xs mt-1">{fmt(vehicle.insurancePerDay)}/day insurance &bull; {vehicle.soldCount} units sold</p>
             </div>
 
-            {/* Buy / Success */}
-            {purchased ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="p-5 rounded-xl bg-green-500/10 border border-green-500/30 text-center"
-              >
-                <CheckCircle className="text-green-400 mx-auto mb-2" size={32} />
-                <p className="text-green-400 font-bold text-lg mb-1">Purchase Confirmed!</p>
-                <p className="text-gray-400 text-sm">Thank you, {buyerName}. Your vehicle is ready for pickup.</p>
-                <Link href="/inventory" className="mt-4 inline-block text-[#c0392b] text-sm underline">
-                  Browse More Vehicles
-                </Link>
-              </motion.div>
-            ) : (
-              <button
-                onClick={() => { setShowModal(true); setError(''); }}
-                disabled={!canBuy}
-                className={`btn-crown w-full py-4 ${!canBuy ? 'opacity-40 cursor-not-allowed' : ''}`}
-              >
-                {canBuy ? `Purchase for ${fmt(vehicle.price)}` : vehicle.status === 'reserved' ? 'Currently Reserved' : 'Already Sold'}
-              </button>
-            )}
+            {/* Enquire button */}
+            <a
+              href="https://gtaw.link/lux"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn-crown w-full py-4 flex items-center justify-center gap-2 ${!canEnquire ? 'opacity-40 pointer-events-none' : ''}`}
+              aria-disabled={!canEnquire}
+            >
+              {canEnquire ? (
+                <><ExternalLink size={16} /> Enquire to Purchase</>
+              ) : (
+                vehicle.status === 'reserved' ? 'Currently Reserved' : 'Already Sold'
+              )}
+            </a>
           </motion.div>
         </div>
 
@@ -221,45 +195,6 @@ export default function VehicleDetailPage() {
         </motion.div>
       </div>
 
-      {/* Buy Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/75 backdrop-blur-sm"
-            onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-[#111] rounded-2xl p-8 max-w-md w-full crown-border shadow-2xl"
-            >
-              <h2 className="font-black text-2xl uppercase mb-1">Confirm Purchase</h2>
-              <p className="text-gray-500 text-sm mb-6">
-                {vehicle.brand} {vehicle.model} &mdash; <span className="text-[#c0392b] font-bold">{fmt(vehicle.price)}</span>
-              </p>
-              <label className="block text-gray-400 text-xs uppercase tracking-wider mb-2">
-                Your Character Name (IC)
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Marcus Holloway"
-                value={buyerName}
-                onChange={(e) => { setBuyerName(e.target.value); setError(''); }}
-                className="lux-input mb-4"
-              />
-              {error && <p className="text-red-400 text-xs mb-4">{error}</p>}
-              <div className="flex gap-3">
-                <button onClick={handleBuy} className="btn-crown flex-1 py-3">Confirm</button>
-                <button onClick={() => setShowModal(false)} className="btn-outline-crown flex-1 py-3">Cancel</button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </PageTransition>
   );
 }

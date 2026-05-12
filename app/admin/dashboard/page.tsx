@@ -572,7 +572,7 @@ export default function AdminDashboard() {
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <p className="font-bold">{req.brand} {req.model} ({req.year})</p>
+                    <p className="font-bold">{req.brand} {req.model}</p>
                     <span className={`text-xs font-semibold uppercase px-2 py-0.5 rounded ${
                       req.status === 'pending' ? 'bg-yellow-500/15 text-yellow-400 border border-yellow-500/30' :
                       req.status === 'reviewed' ? 'bg-green-500/15 text-green-400 border border-green-500/30' :
