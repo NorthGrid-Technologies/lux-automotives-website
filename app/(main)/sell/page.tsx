@@ -169,8 +169,8 @@ export default function SellPage() {
                 </legend>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field
-                    label="Character Name"
-                    placeholder="Marcus Holloway"
+                    label="Full Name"
+                    placeholder="e.g. James Harrington"
                     value={form.name}
                     error={errors.name}
                     onChange={setField('name')}
@@ -267,7 +267,7 @@ export default function SellPage() {
                 Submit Sell Request
               </button>
               <p className="text-gray-600 text-xs text-center">
-                By submitting, you agree this is an in-character request for GTA World RP purposes only.
+                Our acquisitions team will review your submission and reach out within 24 hours.
               </p>
             </motion.form>
           )}

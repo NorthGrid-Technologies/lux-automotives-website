@@ -70,8 +70,8 @@ export default function ContactPage() {
         <div className="space-y-6">
           {[
             { icon: <MapPin size={18} />, label: 'Location', value: 'Rockford Hills, Los Santos, San Andreas' },
-            { icon: <Phone size={18} />, label: 'In-Character', value: 'Contact via /phone in-game' },
-            { icon: <Clock size={18} />, label: 'Hours', value: 'Open during peak server hours' },
+            { icon: <Phone size={18} />, label: 'Phone', value: '19001078' },
+            { icon: <Clock size={18} />, label: 'Hours', value: 'Monday – Saturday, 9:00 AM – 8:00 PM' },
           ].map(({ icon, label, value }) => (
             <div key={label} className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-lg bg-[#c0392b]/10 border border-[#c0392b]/30 flex items-center justify-center flex-shrink-0 text-[#c0392b]">
@@ -117,7 +117,7 @@ export default function ContactPage() {
                     <label className="block text-gray-500 text-xs uppercase tracking-wider mb-1.5">
                       Name <span className="text-[#c0392b]">*</span>
                     </label>
-                    <input type="text" placeholder="Marcus Holloway" value={form.name} onChange={set('name')} className="lux-input" />
+                    <input type="text" placeholder="e.g. James Harrington" value={form.name} onChange={set('name')} className="lux-input" />
                     {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
                   </div>
                   <div>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                   Send Message
                 </button>
                 <p className="text-gray-600 text-xs text-center">
-                  GTA World RP — In-character purposes only.
+                  A member of our team will respond to your enquiry within one business day.
                 </p>
               </motion.form>
             )}

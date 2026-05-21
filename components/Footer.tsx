@@ -46,7 +46,7 @@ export default function Footer() {
             Rockford Hills, Los Santos<br />
             San Andreas
           </p>
-          <p className="text-xs text-gray-700 mt-4">GTA World RP — In Character Business</p>
+          <p className="text-xs text-gray-700 mt-4">Rockford Hills, Los Santos</p>
         </div>
 
         {/* Contact */}
@@ -55,12 +55,10 @@ export default function Footer() {
           <ul className="space-y-3 text-sm text-gray-500">
             <li>
               <a
-                href="https://gtaw.link/lux"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact"
                 className="hover:text-[#c0392b] transition-colors"
               >
-                Join our Discord
+                Schedule a Consultation
               </a>
             </li>
             <li className="text-gray-600">
@@ -72,7 +70,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-[#1a1a1a] flex flex-col sm:flex-row justify-between gap-2 text-xs text-gray-700">
         <p>&copy; 2025 Lux Automotive &middot; Los Santos, San Andreas</p>
-        <p>GTA World RP &mdash; In-character purposes only</p>
+        <p>The standard of excellence in Los Santos.</p>
       </div>
     </footer>
   );

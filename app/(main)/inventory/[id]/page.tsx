@@ -151,9 +151,7 @@ export default function VehicleDetailPage() {
 
             {/* Enquire button */}
             <a
-              href="https://gtaw.link/lux"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact"
               className={`btn-crown w-full py-4 flex items-center justify-center gap-2 ${!canEnquire ? 'opacity-40 pointer-events-none' : ''}`}
               aria-disabled={!canEnquire}
             >
