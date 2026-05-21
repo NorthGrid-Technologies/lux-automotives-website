@@ -64,7 +64,7 @@ export default function Footer() {
               </a>
             </li>
             <li className="text-gray-600">
-              Hotline: Coming Soon
+              Hotline: 19001078
             </li>
           </ul>
         </div>

@@ -34,7 +34,7 @@ export default function HomePage() {
         {/* Banner image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/banner.png"
+            src="https://i.ibb.co/4w7PJ8kf/lux-banner-fb.png"
             alt="Lux Automotive Banner"
             fill
             className="object-cover"
