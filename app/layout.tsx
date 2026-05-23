@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: 'Lux Automotive | Premium Vehicles · Los Santos',
-  description: 'Los Santos’ premier luxury dealership. Browse, buy, and sell high-end vehicles for GTA World RP.',
+  description: ‘Los Santos\’ premier luxury dealership. Browse, buy, and sell high-end vehicles in Los Santos, San Andreas.’,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
